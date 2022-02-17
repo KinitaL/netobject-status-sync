@@ -1,0 +1,44 @@
+image: docker:latest
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  CD_REPO: #hidden
+
+tests:
+  image: golang:1.17
+  stage: test
+  script:
+    - go mod download
+    - go test -v ./...
+
+build_release_image:
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p #hidden #hidden
+  tags:
+    - intercom
+  only:
+    - tags
+  script:
+    - docker build --build-arg ssh_key="" -f deployment/Dockerfile -t "" .
+    - docker push ""
+
+deploy_release_image:
+  image: #hidden
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+    CD_REPOSITORY: #hidden
+  script:
+    - . clone.sh
+    - echo "" > #hidden
+    - push.sh
+  only:
+    refs:
+      - /^\d+\.\d+\.\d+$/
+  tags:
+    - intercom

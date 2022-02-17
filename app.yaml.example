@@ -1,0 +1,19 @@
+app:
+  maxItemsToSend: 300
+  secondSleep: 300
+  numberOfAttempts: 3
+  startHour: 3
+  startMinute: 0
+  startSecond: 0
+  sleepAfterSync: 24
+store:
+  user: ""
+  pwd: ""
+  dsn: ""
+  port:
+  db: ""
+papi:
+  baseUrl: ""
+  url: ""
+prometheus:
+  addr: ""
